@@ -1,45 +1,58 @@
-# Task Description:
+# Binance Trade Analysis
 
-Dataset Information: You'll analyze historical trade data from various Binance accounts over 90 days, containing:
+## Overview
+This project analyzes Binance trade data to rank accounts based on key financial metrics. The approach involves parsing trade history, extracting relevant features, computing financial metrics, and ranking accounts based on a weighted scoring system.
 
-Port_IDs: Unique identifiers for accounts.
-Trade_History: Historical trades with details like timestamp, asset, side (BUY/SELL), price, and more.
-Objective: Analyze the dataset to calculate financial metrics for each account, rank them, and provide a top 20 list.
+## Data Processing Steps
+1. **Load Data**: The CSV file containing trade data is loaded into a Pandas DataFrame.
+2. **Data Exploration**:
+   - Display basic information about the dataset.
+   - Preview initial rows.
+3. **Data Cleaning**:
+   - Convert timestamps to a readable datetime format.
+   - Handle missing values by filling them with zeros.
+4. **Extract Trade History**:
+   - Parse the `Trade_History` column to extract individual trades.
+   - Create a new DataFrame where each trade is a separate row.
+   - Extract key details: `time`, `symbol`, `price`, `quantity`, `trade_type`, and `Profit/Loss`.
 
-Metrics to Calculate:
+## Financial Metrics Computation
+For each account (`Port_IDs`):
+1. **Total Positions**: Number of trades executed.
+2. **Winning Positions**: Number of trades with a positive profit.
+3. **Win Rate**: Ratio of winning positions to total positions.
+4. **Total Profit/Loss**: Sum of all realized profits/losses.
+5. **Return on Investment (ROI)**:
+   \[ ROI = \frac{Total Profit}{Total Investment} \]
+6. **Sharpe Ratio**: Measures risk-adjusted returns.
+   - Calculated using the mean and standard deviation of percentage changes in profit/loss.
+7. **Maximum Drawdown (MDD)**: Measures the largest drop from peak to lowest point in cumulative profits.
 
-ROI (Return on Investment)
-PnL (Profit and Loss)
-Sharpe Ratio
-MDD (Maximum Drawdown)
-Win Rate
-Win Positions
-Total Positions
-Steps to Complete the Task:
+## Ranking Algorithm
+A weighted scoring system ranks the accounts:
+\[ Score = (ROI \times 0.4) + (PnL \times 0.3) + (Sharpe Ratio \times 0.2) + (Win Rate \times 0.1) \]
 
-Data Exploration and Cleaning:
+- **ROI (40%)**: Prioritizes high returns relative to investment.
+- **PnL (30%)**: Considers absolute profitability.
+- **Sharpe Ratio (20%)**: Rewards stable, risk-adjusted gains.
+- **Win Rate (10%)**: Provides a minor boost for consistent winning trades.
 
-Load and inspect the dataset, handle missing values.
-Feature Engineering:
+## Output
+1. **calculated_metrics.csv**: Contains all computed metrics for each account.
+2. **top_20_accounts.csv**: Ranks the top 20 accounts based on the weighted score.
+3. **analysis_report.txt**: A summary report of the analysis.
+4. **trade.csv**(optional) : All the trades row by row and imp params in each columns 
 
-Determine feature importance and create a scoring system with weighted scores.
-Ranking Algorithm:
+## Execution
+1. Click on "Manual_ranking.ipynb"
+2. Click on the colab notebook button
+3. In Colab navbar options click on runtime , "Rull all cells"
+4. Scroll at the bottom to see the final report and file section to access the "Top 20 accounts" and other csv.
 
-Develop an algorithm to rank accounts based on calculated metrics.
-Documentation:
+## Future Enhancements
+- Use **machine learning models** to predict profitable accounts.
+- Implement **deep learning** for pattern recognition in trade history.
+- Optimize scoring weights dynamically based on market conditions.
 
-Provide a concise report on methodology, findings, and assumptions.
-Deliverables:
+This analysis provides valuable insights into trading performance and helps in identifying top-performing accounts based on multiple financial metrics.
 
-Jupyter Notebook or Python script with complete analysis and code.
-CSV file containing calculated metrics.
-List of top 20 accounts based on ranking.
-Report detailing approach and findings.
-Additional Information:
-
-Win Positions: Number of profitable positions.
-Position Identification:
-Combine side and positionSide to classify trades (e.g., long_open, long_close).
-quantity indicates money in the trade, qty indicates coin amount.
-realizedProfit indicates profit or loss (depending on sign).
-This task demands comprehensive data analysis to derive insights and rank accounts based on performance.
